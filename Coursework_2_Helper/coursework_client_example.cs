@@ -57,6 +57,24 @@ string jsonString = JsonSerializer.Serialize(controlUpdate, AppJsonContext.Defau
 data = Encoding.ASCII.GetBytes(jsonString);
 stream.Write(data, 0, data.Length);
 
+while (true)
+{
+    double newThrottle = 0;
+    double newElevatorPitch = 0;
+    Console.WriteLine("Please enter new throttle value (0-100):");
+    newThrottle = Double.Parse(Console.ReadLine());
+    Console.WriteLine("Please enter new elevator pitch value (-5 to 5):");
+    newElevatorPitch = Double.Parse(Console.ReadLine());
+
+    controlUpdate = new Messaging.ControlsUpdate(newThrottle, newElevatorPitch);
+    //now we turn it into JSON
+    jsonString = JsonSerializer.Serialize(controlUpdate, AppJsonContext.Default.ControlsUpdate);
+
+    //then we send the jsonString
+    data = Encoding.ASCII.GetBytes(jsonString);
+    stream.Write(data, 0, data.Length);
+}   
+
 /**
  * In this class we set up our messaging structure for the JSON
  * these are taken from the coursework file.

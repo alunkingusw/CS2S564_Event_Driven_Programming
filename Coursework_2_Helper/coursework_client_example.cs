@@ -13,7 +13,7 @@ using Messaging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-const int PORT = 1000;
+const int PORT = 9999;
 const string IP_ADDRESS = "192.168.174.1";
 
 //string interpolation allows us to print variables in the message - note the $ at the start
@@ -34,7 +34,7 @@ stream.Write(data, 0, data.Length);
 byte[] buffer = new byte[256];
 
 /**
- * Now let's try sending some telemetry data - if we want the simulator
+ * Now let's try sending some Control data - if we want the simulator
  * to respond to this, we need it to be connected, and to be started.
  * As a result (since this is a command line) we will wait for some
  * data to be sent to us
@@ -56,7 +56,6 @@ string jsonString = JsonSerializer.Serialize(controlUpdate, AppJsonContext.Defau
 //then we send the jsonString
 data = Encoding.ASCII.GetBytes(jsonString);
 stream.Write(data, 0, data.Length);
-
 while (true)
 {
     double newThrottle = 0;
@@ -73,7 +72,8 @@ while (true)
     //then we send the jsonString
     data = Encoding.ASCII.GetBytes(jsonString);
     stream.Write(data, 0, data.Length);
-}   
+       
+}
 
 /**
  * C# throws a tantrum if we don't specify the way that we can serialise

@@ -76,7 +76,19 @@ while (true)
 }   
 
 /**
- * In this class we set up our messaging structure for the JSON
+ * C# throws a tantrum if we don't specify the way that we can serialise
+ * and deserialise the JSON. You can see here that I have added the context
+ * for ControlsUpdate. If you add another line for the TelemetryUpdate, then
+ * you can use that too. Note on line 71 that we reference this class to ensure
+ * that serialisation is in the right format.
+ */
+[JsonSourceGenerationOptions(
+    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSerializable(typeof(ControlsUpdate))]
+ internal partial class AppJsonContext:JsonSerializerContext{}
+
+/**
+ * In this namespace we set up our messaging structure for the JSON
  * these are taken from the coursework file.
  * We want to serialise/deserialise these into JSON to send and
  * recieve messages.
@@ -84,13 +96,6 @@ while (true)
  * protocol for the flight simulator to understand us so case 
  * sensitivity matters.
  */
-
-[JsonSourceGenerationOptions(
-    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-[JsonSerializable(typeof(ControlsUpdate))]
- internal partial class AppJsonContext:JsonSerializerContext{}
-
-
 namespace Messaging{
     public class ControlsUpdate
     {
